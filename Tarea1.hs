@@ -1,8 +1,8 @@
 -- =====================================================================
 --  CI-3661 — Tarea 1 (Haskell) — Septiembre–Diciembre 2026
 --
---  Nombre:
---  Carnet:
+--  Nombre: Andres Ramirez
+--  Carnet: 21-10520
 --
 --  Declaración de uso de herramientas de IA (obligatoria, ver enunciado):
 --  Gemini modelo 3.8 flash, para entender flags de compilacion 
@@ -71,7 +71,11 @@ leerHora [a1, a2 , ':', b1, b2]
 leerHora _ = Left "formato inválido"
 
 duracion :: String -> String -> Either String Int
-duracion = undefined
+duracion a b = case (leerHora a,leerHora b) of
+  (Right (x0,y0), Right(x1,y1)) ->
+    if x1 < x0 then Right ((((24+x1) - x0) * 60 ) + y1 - y0) else Right ((x1-x0) * 60 + y1 - y0)
+  (Left err, _) -> Left err
+  (_, Left err) -> Left err
 
 -- =====================================================================
 -- Parte B: orden superior.
