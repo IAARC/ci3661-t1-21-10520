@@ -34,7 +34,11 @@ import Data.Char (isAlphaNum, isDigit, toLower, digitToInt)
 
 -- A1
 esPalindromo :: String -> Bool
-esPalindromo = undefined
+esPalindromo [] = True
+esPalindromo a = string_limpia == reverse_lab string_limpia
+  where
+    string_limpia = limpiar_string a
+
 
 -- A2
 -- Explica aquí, en dos o tres líneas, por qué tu solución recorre la
@@ -76,3 +80,15 @@ miFilter = undefined
 
 miFoldl :: (b -> a -> b) -> b -> [a] -> b
 miFoldl = undefined
+
+
+ -- Funciones auxiliares
+reverse_lab :: [Char] -> [Char]
+reverse_lab [] = []
+reverse_lab (x:xs) = reverse_lab xs ++ [x]
+
+limpiar_string :: [Char] -> [Char]
+limpiar_string [] = []
+limpiar_string (x:xs)
+  | isAlphaNum x = toLower x : limpiar_string xs
+  | otherwise = limpiar_string xs
