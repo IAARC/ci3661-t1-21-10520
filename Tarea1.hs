@@ -5,6 +5,7 @@
 --  Carnet:
 --
 --  Declaración de uso de herramientas de IA (obligatoria, ver enunciado):
+--  Gemini modelo 3.8 flash, para entender flags de compilacion 
 --
 -- =====================================================================
 --  No cambies el nombre del módulo ni la lista de exportación, ni las
@@ -43,13 +44,31 @@ esPalindromo a = string_limpia == reverse_lab string_limpia
 -- A2
 -- Explica aquí, en dos o tres líneas, por qué tu solución recorre la
 -- lista una sola vez:
---
+-- Se divide la lista hasta el caso base [a], realizando O(n) llamadas
+-- al regresar las llamadas cada elemento se visita una unica vez actualizando min y max
+-- en la tupla en una sola pasada
 mayorYMenor :: Ord a => [a] -> Maybe (a, a)
-mayorYMenor = undefined
+mayorYMenor [] = Nothing
+mayorYMenor lista = Just (aux_min_max lista)
+
+
 
 -- A3
 leerHora :: String -> Either String (Int, Int)
-leerHora = undefined
+leerHora [] = Left "formato inválido"
+leerHora [a1, a2 , ':', b1, b2] 
+  | not (isDigit a1) = Left "formato inválido"
+  | not (isDigit a2) = Left "formato inválido"
+  | not (isDigit b1) = Left "formato inválido"
+  | not (isDigit b2) = Left "formato inválido"
+  | a_num > 23 = Left "hora fuera de rango"
+  | b_num > 59 = Left "minutos fuera de rango"
+  | otherwise = Right (a_num, b_num)
+  where
+
+    a_num = 10 * (digitToInt a1) + (digitToInt a2)
+    b_num = 10 * (digitToInt b1) + (digitToInt b2)
+leerHora _ = Left "formato inválido"
 
 duracion :: String -> String -> Either String Int
 duracion = undefined
@@ -92,3 +111,15 @@ limpiar_string [] = []
 limpiar_string (x:xs)
   | isAlphaNum x = toLower x : limpiar_string xs
   | otherwise = limpiar_string xs
+
+aux_min_max :: Ord a => [a] -> (a,a)
+aux_min_max []  = error "aux_min_max: lista vacia"
+aux_min_max [a] = (a,a)
+aux_min_max (x:xs) =
+  let
+    (max_aux,min_aux) = aux_min_max(xs)
+
+    new_max = if x > max_aux then x else max_aux
+    new_min = if x < min_aux then x else min_aux
+  in 
+    (new_max, new_min)
