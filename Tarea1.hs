@@ -102,10 +102,22 @@ promedioSobreUmbral umbral lista =
 
 -- B2
 movimientosCaballo :: (Int, Int) -> [(Int, Int)]
-movimientosCaballo = undefined
+movimientosCaballo (x,y) = [ (a, b) | a <- [1..8], b <- [1..8],
+  let dx = a - x, let dy = b - y, dx*dx + dy*dy == 5] 
 
 enDosSaltos :: (Int, Int) -> Int
-enDosSaltos = undefined
+enDosSaltos (x,y) =
+  let
+    resultado_fold = foldr f acc lista
+  in
+    snd resultado_fold
+  where
+    acc = ([] , 0)
+    lista = enDosSaltosSucio((x,y))
+
+    f casilla (lista_limpia, suma) = 
+      if pertenece casilla lista_limpia then (lista_limpia, suma) else (casilla:lista_limpia , suma + 1)
+
 
 -- B3
 miMap :: (a -> b) -> [a] -> [b]
@@ -141,3 +153,15 @@ aux_min_max (x:xs) =
   in 
     (new_max, new_min)
 
+pertenece :: (Int, Int) -> [(Int, Int)] -> Bool
+pertenece a lista = foldr f False lista
+  where
+    f x acc = (x == a) || acc
+
+enDosSaltosSucio :: (Int, Int) -> [(Int, Int)]
+enDosSaltosSucio (x,y) =
+  let
+    primer_salto = movimientosCaballo (x,y)
+    segundo_salto = [(a,b)| (x1,y1) <- primer_salto, (a,b) <- movimientosCaballo(x1,y1)]
+  in
+    segundo_salto
