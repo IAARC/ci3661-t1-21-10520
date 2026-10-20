@@ -121,13 +121,34 @@ enDosSaltos (x,y) =
 
 -- B3
 miMap :: (a -> b) -> [a] -> [b]
-miMap = undefined
+miMap fun lista =
+  let
+    resultado_fold = foldr f acc lista
+  in
+    resultado_fold
+  where
+    acc = []
+    f x map_list = fun x : map_list
+
 
 miFilter :: (a -> Bool) -> [a] -> [a]
-miFilter = undefined
+miFilter predicado lista =
+  let
+    resultado_fold = foldr f acc lista
+  in
+    resultado_fold
+  where
+    acc = []
+    f x filter_list = if predicado x then x : filter_list else filter_list 
 
 miFoldl :: (b -> a -> b) -> b -> [a] -> b
-miFoldl = undefined
+miFoldl fun inicial lista = 
+  let
+    funcion_foldl = foldr f (\v -> v) lista
+  in
+    funcion_foldl inicial
+  where
+    f x funcionFutura = \acc -> funcionFutura (fun acc x)
 
 
  -- Funciones auxiliares
