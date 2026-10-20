@@ -85,7 +85,20 @@ duracion a b = case (leerHora a,leerHora b) of
 
 -- B1
 promedioSobreUmbral :: Double -> [Double] -> Maybe Double
-promedioSobreUmbral = undefined
+promedioSobreUmbral umbral lista =
+  let
+    resultado_fold = foldr f acc lista
+  in 
+    case resultado_fold of
+      (_, 0.0) ->
+        Nothing
+      (suma, n) ->
+        Just (suma / n)
+  where
+    acc = (0.0, 0.0)
+
+    f x (suma, n) = 
+      if x > umbral then (suma + x, n + 1) else (suma,n)
 
 -- B2
 movimientosCaballo :: (Int, Int) -> [(Int, Int)]
@@ -127,3 +140,4 @@ aux_min_max (x:xs) =
     new_min = if x < min_aux then x else min_aux
   in 
     (new_max, new_min)
+
