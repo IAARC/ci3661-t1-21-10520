@@ -5,8 +5,10 @@
 --  Carnet: 21-10520
 --
 --  Declaración de uso de herramientas de IA (obligatoria, ver enunciado):
---  Gemini modelo 3.8 flash, para entender flags de compilacion 
---
+--  Gemini modelo 3.8 flash, para entender flags de compilacion,
+--  Tarea1.hs:105:72: warning: [GHC-18042] [-Wtype-defaults] 
+--  comprender uso y posibles errores en funciones como digitToInt, isAlphaNum
+--  consultar errores de tipados.
 -- =====================================================================
 --  No cambies el nombre del módulo ni la lista de exportación, ni las
 --  firmas de las funciones. Puedes agregar todas las funciones auxiliares
